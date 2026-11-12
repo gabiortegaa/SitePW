@@ -3,7 +3,8 @@ const CHAVES = {
   carrinho: 'seiva_carrinho',
   usuarios: 'seiva_usuarios',
   log:      'seiva_log',
-  sessao:   'seiva_sessao'
+  sessao:   'seiva_sessao',
+  pedidos:  'seiva_pedidos'
 };
 
 const ADMIN_PADRAO = {
@@ -33,6 +34,7 @@ function iniciarBanco() {
   if (!localStorage.getItem(CHAVES.produtos)) gravar(CHAVES.produtos, PRODUTOS_INICIAIS);
   if (!localStorage.getItem(CHAVES.carrinho)) gravar(CHAVES.carrinho, []);
   if (!localStorage.getItem(CHAVES.log))      gravar(CHAVES.log, []);
+  if (!localStorage.getItem(CHAVES.pedidos))  gravar(CHAVES.pedidos, []);
 
   const usuarios = ler(CHAVES.usuarios);
   if (!usuarios.some(u => u.perfil === 'admin')) {
@@ -178,6 +180,57 @@ function ehAdmin() {
   return !!s && s.perfil === 'admin';
 }
 
+function listarPedidos() { return ler(CHAVES.pedidos); }
+
+function criarPedido() {
+  const sessao = lerSessao();
+  if (!sessao) {
+    return { ok: false, erro: 'É preciso estar logado para finalizar o pedido.' };
+  }
+
+  const carrinho = lerCarrinho();
+  if (carrinho.length === 0) {
+    return { ok: false, erro: 'Seu carrinho está vazio.' };
+  }
+
+  const itens = carrinho.map(function (item) {
+    const p = buscarProduto(item.id);
+    return {
+      id: item.id,
+      nome: p ? p.nome : item.id,
+      preco: p ? p.preco : 0,
+      qtd: item.qtd,
+      subtotal: p ? p.preco * item.qtd : 0
+    };
+  });
+
+  const pedidos = listarPedidos();
+  const numero = pedidos.length + 1;
+
+  const pedido = {
+    numero: numero,
+    codigo: 'PED-' + String(numero).padStart(4, '0'),
+    cliente: sessao.nome,
+    cpf: sessao.cpf,
+    itens: itens,
+    total: itens.reduce(function (s, i) { return s + i.subtotal; }, 0),
+    data: new Date().toISOString(),
+    status: 'Finalizado'
+  };
+
+  pedidos.unshift(pedido);
+  gravar(CHAVES.pedidos, pedidos);
+
+  limparCarrinho();
+  registrarLog('PEDIDO', 'Pedido ' + pedido.codigo + ' finalizado por "' + sessao.nome + '"');
+
+  return { ok: true, pedido: pedido };
+}
+
+function pedidosDoUsuario(cpf) {
+  return listarPedidos().filter(function (p) { return p.cpf === cpf; });
+}
+
 function registrarLog(tipo, mensagem) {
   const log = ler(CHAVES.log);
   log.unshift({ tipo: tipo, mensagem: mensagem, quando: new Date().toISOString() });
@@ -190,6 +243,7 @@ function gerarRelatorio() {
   const produtos = listarProdutos();
   const carrinho = lerCarrinho();
   const usuarios = listarUsuarios();
+  const pedidos = listarPedidos();
 
   const porCategoria = CATEGORIAS.map(function (cat) {
     const itens = produtos.filter(p => p.categoria === cat.slug);
@@ -213,6 +267,11 @@ function gerarRelatorio() {
       itens: carrinho.length,
       unidades: carrinho.reduce((s, i) => s + i.qtd, 0),
       total: totalCarrinho()
+    },
+    pedidos: {
+      total: pedidos.length,
+      valorTotal: pedidos.reduce((s, p) => s + p.total, 0),
+      lista: pedidos
     },
     usuarios: { total: usuarios.length, lista: usuarios },
     log: listarLog(),

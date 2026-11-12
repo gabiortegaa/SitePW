@@ -4,16 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Seiva Mística — Produtos Esotéricos Naturais</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-
 <header class="header">
   <div class="header-inner">
     <a href="#home" class="logo">
@@ -25,22 +21,19 @@
         <span>Produtos Esotéricos Naturais</span>
       </div>
     </a>
-
     <nav class="nav" id="nav">
       <a href="#home" data-nav="home">Página Principal</a>
       <a href="#sobre" data-nav="sobre">Sobre Nós</a>
       <a href="#carrinho" data-nav="carrinho">Carrinho <span class="badge" id="cartBadge">0</span></a>
+      <a href="#pedidos" data-nav="pedidos" class="so-logado" hidden>Meus Pedidos</a>
       <a href="#admin" data-nav="admin" class="so-admin" hidden>Administração</a>
       <a href="#relatorio" data-nav="relatorio" class="so-admin" hidden>Relatório</a>
     </nav>
-
     <a href="#login" class="btn-login" id="btnLoginHeader">Login e Cadastro</a>
     <button class="btn-login" id="btnSairHeader" hidden>Sair</button>
   </div>
 </header>
-
 <main>
-
   <section class="view active" id="view-home">
     <div class="hero">
       <img class="hero-bg" src="img/hero.jpg" alt="Cristais, velas e ervas">
@@ -51,7 +44,6 @@
         <a href="#cristais" class="btn-primary">Compre Agora</a>
       </div>
     </div>
-
     <div class="section">
       <div class="section-inner">
         <h2 class="section-title">Encontre o que faz sentido para você.</h2>
@@ -60,7 +52,6 @@
       </div>
     </div>
   </section>
-
   <section class="view catalogo-page" id="view-catalogo">
     <div class="catalogo-card">
       <a href="#home" class="voltar">← Voltar para a home</a>
@@ -72,7 +63,6 @@
       <div class="produtos" id="gridProdutos"></div>
     </div>
   </section>
-
   <section class="view sobre-page" id="view-sobre">
     <div class="sobre-card">
       <div class="sobre-grid">
@@ -90,7 +80,6 @@
       </div>
     </div>
   </section>
-
   <section class="view carrinho-page" id="view-carrinho">
     <div class="catalogo-card">
       <a href="#home" class="voltar">← Continuar comprando</a>
@@ -99,7 +88,6 @@
         <h2>Meu Carrinho</h2>
         <div class="divider"></div>
       </div>
-
       <div class="tabela-wrap">
         <table class="tabela-carrinho">
           <thead>
@@ -112,7 +100,6 @@
           </tfoot>
         </table>
       </div>
-
       <div class="carrinho-acoes">
         <button class="btn-secundario" id="btnLimparCarrinho">Limpar Carrinho</button>
         <button class="btn-finalizar" id="btnFinalizar">
@@ -125,7 +112,25 @@
       </div>
     </div>
   </section>
-
+  <section class="view carrinho-page" id="view-pedidos">
+    <div class="catalogo-card">
+      <a href="#home" class="voltar">← Voltar para a home</a>
+      <div class="catalogo-head">
+        <div class="logo-mark"><img src="img/logo.png" alt="Logo Seiva Mística"></div>
+        <h2>Meus Pedidos</h2>
+        <p class="admin-sub">Histórico dos pedidos finalizados na sua conta</p>
+        <div class="divider"></div>
+      </div>
+      <div class="tabela-wrap">
+        <table class="tabela-admin">
+          <thead>
+            <tr><th>Código</th><th>Itens</th><th>Total</th><th>Data</th><th>Status</th></tr>
+          </thead>
+          <tbody id="listaPedidos"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
   <section class="view admin-page" id="view-admin">
     <div class="catalogo-card">
       <a href="#home" class="voltar">← Voltar para a home</a>
@@ -135,7 +140,6 @@
         <p class="admin-sub">Adicione um novo produto à base de dados</p>
         <div class="divider"></div>
       </div>
-
       <form class="form-produto" id="formProduto">
         <div class="form-linha">
           <label class="campo-form">
@@ -151,7 +155,6 @@
             </select>
           </label>
         </div>
-
         <div class="form-linha">
           <label class="campo-form">
             <span>Preço (R$)</span>
@@ -162,17 +165,14 @@
             <input type="number" name="estoque" min="0" placeholder="EX: 10" required>
           </label>
         </div>
-
         <label class="campo-form">
           <span>Descrição</span>
           <textarea name="descricao" rows="2" placeholder="EX: Descrição do produto..."></textarea>
         </label>
-
         <label class="campo-form">
           <span>Caminho da imagem</span>
           <input type="text" name="imagem" placeholder="EX: img/ametista.jpg">
         </label>
-
         <div class="admin-acoes">
           <a href="#editar" class="btn-secundario">Editar Produtos</a>
           <button type="submit" class="btn-finalizar">
@@ -186,7 +186,6 @@
       </form>
     </div>
   </section>
-
   <section class="view admin-page" id="view-editar">
     <div class="catalogo-card">
       <a href="#admin" class="voltar">← Voltar para adicionar produtos</a>
@@ -199,7 +198,6 @@
       <div class="produtos" id="gridEditar"></div>
     </div>
   </section>
-
   <section class="view admin-page" id="view-relatorio">
     <div class="catalogo-card">
       <a href="#home" class="voltar">← Voltar para a home</a>
@@ -209,9 +207,7 @@
         <p class="admin-sub">Tudo o que está salvo no localStorage do navegador</p>
         <div class="divider"></div>
       </div>
-
       <div class="stats" id="statsRelatorio"></div>
-
       <h3 class="rel-titulo">Produtos por categoria</h3>
       <div class="tabela-wrap">
         <table class="tabela-admin">
@@ -219,7 +215,6 @@
           <tbody id="relCategorias"></tbody>
         </table>
       </div>
-
       <h3 class="rel-titulo">Produtos cadastrados</h3>
       <div class="tabela-wrap">
         <table class="tabela-admin">
@@ -227,7 +222,13 @@
           <tbody id="relProdutos"></tbody>
         </table>
       </div>
-
+      <h3 class="rel-titulo">Pedidos finalizados</h3>
+      <div class="tabela-wrap">
+        <table class="tabela-admin">
+          <thead><tr><th>Código</th><th>Cliente</th><th>Itens</th><th>Total</th><th>Data</th><th>Status</th></tr></thead>
+          <tbody id="relPedidos"></tbody>
+        </table>
+      </div>
       <h3 class="rel-titulo">Usuários cadastrados</h3>
       <div class="tabela-wrap">
         <table class="tabela-admin">
@@ -235,7 +236,6 @@
           <tbody id="relUsuarios"></tbody>
         </table>
       </div>
-
       <h3 class="rel-titulo">Últimas operações</h3>
       <div class="tabela-wrap">
         <table class="tabela-admin">
@@ -243,19 +243,16 @@
           <tbody id="relLog"></tbody>
         </table>
       </div>
-
       <div class="admin-acoes">
         <button class="btn-secundario" id="btnAtualizarRel">Atualizar</button>
         <button class="btn-finalizar" id="btnResetar">Resetar Dados</button>
       </div>
     </div>
   </section>
-
   <section class="view auth-page" id="view-login">
     <div class="auth-box">
       <div class="auth-logo"><img src="img/logo.png" alt="Seiva Mística"></div>
       <h2 class="auth-titulo">Faça seu Login</h2>
-
       <form class="auth-form" id="formLogin">
         <label class="campo">
           <span class="campo-icone">
@@ -265,7 +262,6 @@
           </span>
           <input type="text" name="cpf" placeholder="CPF" inputmode="numeric" maxlength="14" required>
         </label>
-
         <label class="campo">
           <span class="campo-icone">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -274,7 +270,6 @@
           </span>
           <input type="password" name="senha" placeholder="Senha" required>
         </label>
-
         <button type="submit" class="btn-auth">
           Entrar
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -282,19 +277,16 @@
           </svg>
         </button>
       </form>
-
       <div class="auth-rodape">
         <p>Não possui conta? Cadastre-se:</p>
         <a href="#cadastro" class="btn-auth-secundario">Criar Conta</a>
       </div>
     </div>
   </section>
-
   <section class="view auth-page" id="view-cadastro">
     <div class="auth-box">
       <div class="auth-logo"><img src="img/logo.png" alt="Seiva Mística"></div>
       <h2 class="auth-titulo">Crie seu Cadastro</h2>
-
       <form class="auth-form" id="formCadastro">
         <label class="campo">
           <span class="campo-icone">
@@ -304,7 +296,6 @@
           </span>
           <input type="text" name="nome" placeholder="Nome" required>
         </label>
-
         <label class="campo">
           <span class="campo-icone">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -313,7 +304,6 @@
           </span>
           <input type="text" name="cpf" placeholder="CPF" inputmode="numeric" maxlength="14" required>
         </label>
-
         <label class="campo">
           <span class="campo-icone">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -322,7 +312,6 @@
           </span>
           <input type="email" name="email" placeholder="Email" required>
         </label>
-
         <label class="campo">
           <span class="campo-icone">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -331,29 +320,23 @@
           </span>
           <input type="password" name="senha" placeholder="Senha" required>
         </label>
-
         <fieldset class="preferencias">
           <legend>Preferência</legend>
           <div class="preferencias-grid">
             <label class="check"><input type="checkbox" name="pref" value="Cristais"><span>Cristais</span></label>
             <label class="check"><input type="checkbox" name="pref" value="Tarot e Oráculos"><span>Tarot e Oráculos</span></label>
             <label class="check"><input type="checkbox" name="pref" value="Aromas e Incensos"><span>Aromas e Incensos</span></label>
-            <label class="check"><input type="checkbox" name="pref" value="Rituais e Autocuidado"><span>Rituais e Autocuidado</span></label>
           </div>
         </fieldset>
-
         <button type="submit" class="btn-auth">Criar Conta</button>
       </form>
-
       <div class="auth-rodape">
         <p>Já possui conta?</p>
         <a href="#login" class="btn-auth-secundario">Fazer Login</a>
       </div>
     </div>
   </section>
-
 </main>
-
 <footer class="footer">
   <div class="footer-inner">
     <div>
@@ -381,7 +364,6 @@
   </div>
   <div class="footer-bottom">© 2026 Seiva Mística — Trabalho PW1</div>
 </footer>
-
 <script src="produtos.js"></script>
 <script src="storage.js"></script>
 <script src="script.js"></script>

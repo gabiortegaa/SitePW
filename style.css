@@ -12,7 +12,6 @@
   --sombra:0 10px 30px rgba(34,32,28,.08);
   --raio:18px;
 }
-
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -25,7 +24,6 @@ body{
 img{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
-
 .header{
   position:sticky;top:0;z-index:100;
   background:var(--branco);
@@ -54,7 +52,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;
   color:var(--cinza);margin-top:3px;
 }
-
 .nav{display:flex;align-items:center;gap:30px}
 .nav a{
   font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
@@ -68,13 +65,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .nav a:hover{color:var(--oliva-escuro)}
 .nav a:hover::after,.nav a.active::after{width:100%}
 .nav a.active{color:var(--oliva-escuro)}
-
 .badge{
   background:var(--oliva);color:#fff;font-size:9.5px;
   min-width:17px;height:17px;border-radius:999px;
   display:grid;place-items:center;padding:0 4px;letter-spacing:0;
 }
-
 .btn-login{
   background:var(--petroleo);color:var(--branco);
   padding:11px 24px;border-radius:999px;
@@ -82,10 +77,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   transition:background .25s, transform .2s;
 }
 .btn-login:hover{background:#162b33;transform:translateY(-1px)}
-
 .menu-toggle{display:none;flex-direction:column;gap:5px;padding:8px}
 .menu-toggle span{width:22px;height:1.5px;background:var(--petroleo)}
-
 .btn-primary{
   display:inline-block;margin-top:34px;
   background:var(--tinta);color:var(--branco);
@@ -94,7 +87,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   transition:background .25s, transform .2s;
 }
 .btn-primary:hover{background:var(--petroleo);transform:translateY(-2px)}
-
 .btn-secundario{
   display:inline-block;
   background:transparent;color:var(--petroleo);
@@ -104,7 +96,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   transition:background .25s, color .25s;
 }
 .btn-secundario:hover{background:var(--petroleo);color:var(--branco)}
-
 .btn-finalizar{
   display:inline-flex;align-items:center;gap:10px;
   background:var(--oliva);color:#fff;
@@ -114,7 +105,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 }
 .btn-finalizar:hover{background:var(--oliva-escuro);transform:translateY(-2px)}
 .btn-finalizar svg{width:17px;height:17px}
-
 .hero{
   position:relative;
   min-height:min(78vh,620px);
@@ -151,7 +141,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   max-width:470px;margin:20px auto 0;
   font-weight:300;line-height:1.75;
 }
-
 .section{padding:90px 24px}
 .section-inner{max-width:1140px;margin:0 auto}
 .section-title{
@@ -164,7 +153,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   text-align:center;font-size:12px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--cinza);margin-top:12px;
 }
-
 .categorias{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -201,7 +189,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   letter-spacing:.2em;text-transform:uppercase;color:var(--oliva-escuro);
   margin-bottom:6px;
 }
-
 .catalogo-page,.sobre-page,.carrinho-page,.admin-page{
   min-height:100vh;
   padding:56px 24px 90px;
@@ -233,7 +220,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   font-size:12.5px;color:var(--cinza);
   margin-top:10px;font-weight:300;
 }
-
 .voltar{
   display:inline-flex;align-items:center;gap:8px;
   font-size:11px;letter-spacing:.16em;text-transform:uppercase;
@@ -241,7 +227,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   transition:color .25s;
 }
 .voltar:hover{color:var(--oliva-escuro)}
-
 .produtos{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -281,7 +266,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 }
 .btn-bag:hover{background:var(--oliva-escuro);transform:scale(1.08)}
 .btn-bag svg{width:16px;height:16px}
-
 .sobre-card{
   max-width:1080px;margin:0 auto;
   background:var(--branco);
@@ -315,7 +299,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   font-family:var(--serif);font-style:italic;
   font-size:17px;color:#3d4a3a;
 }
-
 .tabela-wrap{overflow-x:auto}
 .tabela-carrinho,.tabela-admin{
   width:100%;border-collapse:collapse;
@@ -337,7 +320,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   object-fit:cover;background:#ded4bf;flex-shrink:0;
 }
 .carrinho-produto span{font-size:12.5px;line-height:1.45}
-
 .qtd{
   display:inline-flex;align-items:center;gap:10px;
   border:1px solid rgba(31,58,68,.2);border-radius:999px;
@@ -350,7 +332,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 }
 .qtd button:hover{background:var(--creme-2)}
 .qtd span{min-width:18px;text-align:center;font-size:12.5px}
-
 .tabela-carrinho tfoot td{
   font-family:var(--serif);font-size:16px;
   border-bottom:none;padding:14px 18px;
@@ -362,7 +343,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 }
 .valor-frete{color:var(--cinza);font-size:13px;font-family:var(--sans)}
 .valor-total{font-weight:600;color:var(--petroleo);font-size:19px}
-
 .carrinho-acoes,.admin-acoes{
   display:flex;align-items:center;justify-content:flex-end;
   gap:14px;margin-top:28px;flex-wrap:wrap;
@@ -371,7 +351,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   text-align:center;padding:48px 20px;
   color:var(--cinza);font-size:13.5px;
 }
-
 .form-produto{display:flex;flex-direction:column;gap:16px}
 .form-linha{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .campo-form{display:flex;flex-direction:column;gap:6px}
@@ -387,7 +366,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .campo-form input:focus,.campo-form select:focus,.campo-form textarea:focus{
   outline:none;border-color:var(--oliva);
 }
-
 .stats{
   display:grid;grid-template-columns:repeat(5,1fr);
   gap:14px;margin-bottom:36px;
@@ -419,7 +397,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   font-size:11px;background:rgba(31,58,68,.07);
   padding:2px 6px;border-radius:4px;
 }
-
 .produto-admin-acoes{
   display:flex;gap:8px;margin-top:12px;
   padding-top:12px;border-top:1px solid rgba(34,32,28,.1);
@@ -434,7 +411,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .btn-editar:hover{background:var(--oliva-escuro)}
 .btn-excluir{background:transparent;border:1px solid rgba(34,32,28,.2);color:var(--cinza)}
 .btn-excluir:hover{border-color:#b04a3a;color:#b04a3a}
-
 .auth-page{
   min-height:100vh;
   padding:56px 24px 90px;
@@ -465,7 +441,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   text-transform:uppercase;text-align:center;
   color:var(--petroleo);margin-bottom:30px;
 }
-
 .auth-form{display:flex;flex-direction:column;gap:14px}
 .campo{
   display:flex;align-items:center;gap:12px;
@@ -486,14 +461,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   font-family:var(--sans);font-size:13.5px;color:var(--tinta);
 }
 .campo input::placeholder{color:#9a948a}
-
 .preferencias{border:none;margin-top:6px}
 .preferencias legend{
   font-size:11px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--petroleo);font-weight:500;margin-bottom:12px;
 }
 .preferencias-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px 16px;
 }
 .check{
   display:flex;align-items:center;gap:8px;
@@ -513,7 +487,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   border:solid #fff;border-width:0 1.8px 1.8px 0;
   transform:rotate(45deg);
 }
-
 .btn-auth{
   display:flex;align-items:center;justify-content:center;gap:10px;
   width:100%;height:48px;margin-top:8px;
@@ -524,7 +497,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 }
 .btn-auth:hover{background:#162b33;transform:translateY(-1px)}
 .btn-auth svg{width:16px;height:16px}
-
 .auth-rodape{
   text-align:center;margin-top:26px;
   padding-top:22px;border-top:1px solid rgba(31,58,68,.16);
@@ -539,7 +511,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   transition:background .25s, color .25s;
 }
 .btn-auth-secundario:hover{background:var(--petroleo);color:var(--branco)}
-
 .footer{
   background:var(--petroleo);color:var(--creme);
   padding:56px 24px 32px;
@@ -564,11 +535,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   font-size:11px;letter-spacing:.1em;
   color:rgba(246,241,231,.5);text-align:center;
 }
-
 .view{display:none}
 .view.active{display:block;animation:fade .4s ease}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
 @media (max-width:900px){
   .categorias{grid-template-columns:1fr;gap:24px}
   .produtos{grid-template-columns:1fr 1fr}
@@ -599,7 +568,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .auth-box{padding:34px 22px 30px;border-radius:20px}
   .preferencias-grid{grid-template-columns:1fr}
 }
-
-.btn-login[hidden], .so-admin[hidden]{display:none !important}
+.btn-login[hidden], .so-admin[hidden], .so-logado[hidden]{display:none !important}
 #btnSairHeader{background:transparent;border:1px solid var(--petroleo);color:var(--petroleo)}
 #btnSairHeader:hover{background:var(--petroleo);color:var(--branco)}

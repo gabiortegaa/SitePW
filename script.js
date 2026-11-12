@@ -7,12 +7,14 @@ const ROTAS = {
   relatorio: 'view-relatorio',
   login:     'view-login',
   cadastro:  'view-cadastro',
+  pedidos:   'view-pedidos',
   cristais:  'view-catalogo',
   taro:      'view-catalogo',
   ervas:     'view-catalogo'
 };
 
 const ROTAS_ADMIN = ['admin', 'editar', 'relatorio'];
+const ROTAS_LOGADO = ['pedidos'];
 
 function criarCardProduto(produto, modo) {
   modo = modo || 'catalogo';
@@ -146,7 +148,7 @@ function renderRelatorio() {
     stats.innerHTML =
       '<div class="stat-card"><span class="stat-num">' + rel.produtos.total + '</span><span class="stat-label">Produtos</span></div>' +
       '<div class="stat-card"><span class="stat-num">' + formatarPreco(rel.produtos.valorTotal) + '</span><span class="stat-label">Valor em catálogo</span></div>' +
-      '<div class="stat-card"><span class="stat-num">' + rel.carrinho.unidades + '</span><span class="stat-label">Itens no carrinho</span></div>' +
+      '<div class="stat-card"><span class="stat-num">' + rel.pedidos.total + '</span><span class="stat-label">Pedidos</span></div>' +
       '<div class="stat-card"><span class="stat-num">' + rel.usuarios.total + '</span><span class="stat-label">Usuários</span></div>' +
       '<div class="stat-card"><span class="stat-num">' + rel.espacoUsado + '</span><span class="stat-label">Espaço usado</span></div>';
   }
@@ -163,6 +165,22 @@ function renderRelatorio() {
     tProd.innerHTML = listarProdutos().map(function (p) {
       return '<tr><td><code>' + p.id + '</code></td><td>' + p.nome + '</td><td>' + p.categoria + '</td><td>' + formatarPreco(p.preco) + '</td><td>' + p.estoque + '</td></tr>';
     }).join('');
+  }
+
+  const tPedidos = document.getElementById('relPedidos');
+  if (tPedidos) {
+    const pedidos = listarPedidos();
+    tPedidos.innerHTML = pedidos.length
+      ? pedidos.map(function (p) {
+          const itensTxt = p.itens.map(function (i) { return i.qtd + 'x ' + i.nome; }).join(', ');
+          return '<tr><td><code>' + p.codigo + '</code></td>' +
+                 '<td>' + p.cliente + '</td>' +
+                 '<td>' + itensTxt + '</td>' +
+                 '<td>' + formatarPreco(p.total) + '</td>' +
+                 '<td>' + new Date(p.data).toLocaleString('pt-BR') + '</td>' +
+                 '<td><span class="tag">' + p.status + '</span></td></tr>';
+        }).join('')
+      : '<tr><td colspan="6" class="carrinho-vazio">Nenhum pedido finalizado.</td></tr>';
   }
 
   const tUser = document.getElementById('relUsuarios');
@@ -184,13 +202,42 @@ function renderRelatorio() {
   }
 }
 
+function renderPedidos() {
+  const tbody = document.getElementById('listaPedidos');
+  if (!tbody) return;
+
+  const sessao = lerSessao();
+  if (!sessao) return;
+
+  const pedidos = pedidosDoUsuario(sessao.cpf);
+
+  if (pedidos.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="carrinho-vazio">Você ainda não fez nenhum pedido.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = pedidos.map(function (p) {
+    const itensTxt = p.itens.map(function (i) { return i.qtd + 'x ' + i.nome; }).join(', ');
+    return '<tr><td><code>' + p.codigo + '</code></td>' +
+           '<td>' + itensTxt + '</td>' +
+           '<td>' + formatarPreco(p.total) + '</td>' +
+           '<td>' + new Date(p.data).toLocaleString('pt-BR') + '</td>' +
+           '<td><span class="tag">' + p.status + '</span></td></tr>';
+  }).join('');
+}
+
 function render() {
   const hash = (location.hash || '#home').replace('#', '');
   const viewId = ROTAS[hash] || 'view-home';
 
-  // Bloqueia páginas administrativas para quem não é admin
   if (ROTAS_ADMIN.indexOf(hash) !== -1 && !ehAdmin()) {
     alert('Acesso restrito. Faça login como administrador.');
+    location.hash = '#login';
+    return;
+  }
+
+  if (ROTAS_LOGADO.indexOf(hash) !== -1 && !lerSessao()) {
+    alert('Faça login para acessar seus pedidos.');
     location.hash = '#login';
     return;
   }
@@ -207,6 +254,7 @@ function render() {
   if (viewId === 'view-carrinho')  renderCarrinho();
   if (viewId === 'view-editar')    renderEditar();
   if (viewId === 'view-relatorio') renderRelatorio();
+  if (viewId === 'view-pedidos')   renderPedidos();
 
   atualizarBadge();
   atualizarHeader();
@@ -225,6 +273,10 @@ function atualizarHeader() {
     el.hidden = !admin;
   });
 
+  document.querySelectorAll('.so-logado').forEach(function (el) {
+    el.hidden = !sessao;
+  });
+
   const btnLogin = document.getElementById('btnLoginHeader');
   const btnSair = document.getElementById('btnSairHeader');
 
@@ -240,7 +292,6 @@ function atualizarBadge() {
   if (badge) badge.textContent = lerCarrinho().reduce(function (s, i) { return s + i.qtd; }, 0);
 }
 
-/* ---------- 4. MÁSCARA DE CPF ---------- */
 function mascaraCPF(input) {
   let v = input.value.replace(/\D/g, '').slice(0, 11);
   v = v.replace(/(\d{3})(\d)/, '$1.$2');
@@ -311,11 +362,32 @@ if (btnLimpar) {
 const btnFinalizar = document.getElementById('btnFinalizar');
 if (btnFinalizar) {
   btnFinalizar.addEventListener('click', function () {
-    if (lerCarrinho().length === 0) { alert('Seu carrinho está vazio.'); return; }
-    alert('Pedido de ' + formatarPreco(totalCarrinho()) + ' finalizado!');
-    limparCarrinho();
+    if (!lerSessao()) {
+      alert('Faça login ou cadastre-se para finalizar o pedido.');
+      location.hash = '#login';
+      return;
+    }
+
+    if (lerCarrinho().length === 0) {
+      alert('Seu carrinho está vazio.');
+      return;
+    }
+
+    if (!confirm('Confirmar a finalização do pedido no valor de ' + formatarPreco(totalCarrinho()) + '?')) {
+      return;
+    }
+
+    const res = criarPedido();
+
+    if (!res.ok) {
+      alert(res.erro);
+      return;
+    }
+
+    alert('Pedido ' + res.pedido.codigo + ' finalizado com sucesso!\nTotal: ' + formatarPreco(res.pedido.total));
     renderCarrinho();
     atualizarBadge();
+    location.hash = '#pedidos';
   });
 }
 
@@ -373,18 +445,33 @@ if (formCadastro) {
   formCadastro.addEventListener('submit', function (e) {
     e.preventDefault();
     const f = new FormData(e.target);
-    const res = cadastrarUsuario({
+
+    const dados = {
       nome: f.get('nome'),
       cpf: f.get('cpf'),
       email: f.get('email'),
       senha: f.get('senha'),
       preferencias: f.getAll('pref')
-    });
-    if (res.ok) {
-      alert('Cadastro realizado com sucesso!');
-      location.hash = '#login';
-    } else {
+    };
+
+    const res = cadastrarUsuario(dados);
+
+    if (!res.ok) {
       alert(res.erro);
+      return;
+    }
+
+    const user = autenticar(dados.cpf, dados.senha);
+
+    if (user) {
+      salvarSessao(user);
+      registrarLog('CADASTRO', 'Usuário "' + user.nome + '" cadastrado e logado');
+      alert('Cadastro realizado! Bem-vindo(a), ' + user.nome + '.');
+      atualizarHeader();
+      location.hash = '#home';
+    } else {
+      alert('Cadastro realizado! Faça login para continuar.');
+      location.hash = '#login';
     }
   });
 }
